@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../components/round_button.dart';
 import './main_screen.dart';
+import './result_screen.dart';
+import './custom_screen.dart';
 
 
 class StartScreen extends StatefulWidget {
@@ -19,9 +21,10 @@ class _StartScreenState extends State<StartScreen> {
       body: (
       Container(
         child: FloatingActionButton(
-          onPressed: (){
-            Navigator.pushNamed(context, MainScreen.id);
-          },
+          onPressed: () {
+            Navigator.pushNamed(context, CustomScreen.id);
+          }
+
         ),
 
       )
