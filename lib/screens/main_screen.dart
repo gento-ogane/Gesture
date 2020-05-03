@@ -6,6 +6,7 @@ import "package:intl/intl.dart";
 import '../components/round_button.dart';
 import 'dart:async';
 import './result_screen.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
 
 
 class MainScreen extends StatefulWidget {
@@ -23,6 +24,7 @@ class _MainScreenState extends State<MainScreen> {
   Stopwatch s = Stopwatch();
   Timer _timer;
   final _formatter = DateFormat('ss');
+  AssetsAudioPlayer assetsAudioPlayer = AssetsAudioPlayer();
 
   void shuffle() {
     for (int i = questions.length - 1; i > 0; i--) {
@@ -36,7 +38,6 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
-
   @override
   void initState() {
     super.initState();
@@ -48,7 +49,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
 
   void setState(fn) {
-    if(s.elapsed.inSeconds.toInt()==10){
+    if(s.elapsed.inSeconds.toInt()==60){
       Navigator.pushNamed(context, ResultScreen.id);
       s.stop();
       s.reset();
@@ -63,65 +64,162 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Widget build(BuildContext context) {
-
     return Scaffold(
-        appBar: AppBar(title: Text('Gesture!!')),
+        appBar: AppBar(
+            backgroundColor: Colors.blueAccent,
+            title: Text(
+                "Let's Jesture!!",
+
+            )),
         body: Column(
           children: <Widget>[
-            Container(
-              child: (
-                  Text(
-                s.elapsed.inSeconds.toString(),
-              )),
+            SizedBox(
+              height: 50,
+              width: double.infinity,
             ),
-            Center(
-              child: (Container(
-                child: (
-                    Text(
-                    questions[questionIndex],
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 50.0
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                        Container(
+                        height: 30,
+                        child: Text(
+                          "TIME",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
                       ),
-                    )),
-              )),
+                       Container(
+                        height: 80,
+                        child: (Text(
+                          s.elapsed.inSeconds.toString(),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 50,
+                          ),
+                        )),
+                      ),
+
+                  ],
+                ),
+                Column(
+                  children: <Widget>[
+                    Container(
+                      height: 30,
+                      child: Text(
+                        "SCORE",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 80,
+                      child: (Text(
+                        score.toString(),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 50,
+                        ),
+                      )),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+
+            SizedBox(
+              height: 100,
+            ),
+            Container(
+              height: 200,
+              width: double.infinity,
+              child: Text(
+                questions[questionIndex],
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 70.0
+                ),
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                RoundIconButton(
-                  icon: FontAwesomeIcons.arrowRight,
-                  onPressed: () {
-                    setState(() {
-                      if (questionIndex < questions.length - 1) {
-                        questionIndex += 1;
-                      } else {
-                        questionIndex += 0;
-                      }
-                    });
-                  },
+                Container(
+                    height: 150,
+                    width: 150,
+                    margin: EdgeInsets.all(10),
+
+                  child: RaisedButton(
+                    color: Colors.redAccent,
+                    child: Text(
+                        "スキップ",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                      ),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        if (questionIndex < questions.length - 1) {
+                          questionIndex += 1;
+                        } else {
+                          questionIndex += 0;
+                        }
+                      });
+                    },
+                    highlightElevation: 16.0,
+                    highlightColor: Colors.red,
+                    onHighlightChanged: (value) {},
+                    shape: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red),
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                  ),
                 ),
-                RoundIconButton(
-                  icon: FontAwesomeIcons.circle,
-                  onPressed: () {
-                    setState(() {
-                      if (questionIndex < questions.length - 1) {
-                        questionIndex += 1;
-                        score += 10;
-                      } else {
-                        questionIndex += 0;
-                      }
-                    });
-                  },
+                Container(
+                  height: 150,
+                  width: 150,
+                  margin: EdgeInsets.all(10),
+
+                  child: RaisedButton(
+                    color: Colors.blueAccent,
+                    child: Text(
+                      "正解",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                      ),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        if (questionIndex < questions.length - 1) {
+                          questionIndex += 1;
+                          score += 10;
+                        } else {
+                          questionIndex += 0;
+                        }
+                      });
+                    },
+                    highlightElevation: 16.0,
+                    highlightColor: Colors.blue,
+                    onHighlightChanged: (value) {},
+                    shape: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue),
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                  ),
                 ),
               ],
             ),
-            Container(
-              child: (Text(
-                score.toString(),
-              )),
-            )
+
           ],
         ));
   }
 }
+
