@@ -9,6 +9,10 @@ class ResultScreen extends StatefulWidget {
 class _ResultScreenState extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: Text(
+        "aaaa"
+      ),
+    );
   }
 }

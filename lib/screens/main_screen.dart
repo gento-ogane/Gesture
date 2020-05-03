@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gesture/Data/QuenstionList.dart';
 import 'dart:math';
 import "package:intl/intl.dart";
 import '../components/round_button.dart';
@@ -14,7 +15,8 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  List questions = ["うんこ", "古事記", "げんまる", "とみおか"];
+//  List questions = ["うんこ", "古事記", "げんまる", "とみおか"];
+  List questions = QuestionList.questioners;
   int questionIndex = 0;
   int score = 0;
   int timer = 60;
